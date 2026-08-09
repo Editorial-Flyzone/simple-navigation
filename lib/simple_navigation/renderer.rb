@@ -1,12 +1,12 @@
-require 'simple_navigation/helpers'
-require 'simple_navigation/renderer/base'
+# frozen_string_literal: true
 
 module SimpleNavigation
+  # Explicit namespace for the renderers living in renderer/.
+  #
+  # Without this file Zeitwerk would infer SimpleNavigation::Renderer as an
+  # implicit namespace from the renderer/ directory. That inference is not
+  # resolved reliably on every runtime (e.g. JRuby, see issue #237), so the
+  # namespace is defined explicitly here.
   module Renderer
-    autoload :List, 'simple_navigation/renderer/list'
-    autoload :Links, 'simple_navigation/renderer/links'
-    autoload :Breadcrumbs, 'simple_navigation/renderer/breadcrumbs'
-    autoload :Text, 'simple_navigation/renderer/text'
-    autoload :Json, 'simple_navigation/renderer/json'
   end
 end

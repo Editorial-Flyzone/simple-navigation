@@ -1,14 +1,19 @@
+# frozen_string_literal: true
+
 module SimpleNavigation
   module Adapters
+    # @deprecated This adapter is for Nanoc3 (circa 2011-2012) and is no longer actively maintained.
+    #   Nanoc3 is obsolete and has been replaced by Nanoc 4+. This adapter is kept for
+    #   backward compatibility but should not be used for new projects.
     class Nanoc < Base
       class << self
         def register(root)
           SimpleNavigation.set_env(root, 'development')
-          Nanoc3::Context.send(:include, SimpleNavigation::Helpers)
+          Nanoc3::Context.include SimpleNavigation::Helpers
         end
       end
 
-      def initialize(ctx)
+      def initialize(ctx) # rubocop:disable Lint/MissingSuper
         @context = ctx
       end
 
@@ -39,7 +44,7 @@ module SimpleNavigation
       private
 
       def to_attributes(options)
-        options.map { |k, v| v.nil? ? nil : "#{k}='#{v}'" }.compact.join(' ')
+        options.filter_map { |k, v| v.nil? ? nil : "#{k}='#{v}'" }.join(' ')
       end
     end
   end
